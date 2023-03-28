@@ -87,7 +87,7 @@ class Scoring extends Controller
 public function delete($scoringId)
   {
     $scoringModel = $this->scoringModel->delete($scoringId);
-    if ($scoringdelete == 0) {
+    if ($scoringdelete = 0) {
       header("Refresh: 4; URL=" . URLROOT . "/scoring/index");
       echo "er is iets fout gegaan<br>";
       echo "    je word doorgestuurd naar de homepagina";
