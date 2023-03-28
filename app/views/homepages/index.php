@@ -3,4 +3,5 @@
 <a href="<?=URLROOT;?>/students/index">Lessen student</a> | 
 <a href="<?=URLROOT;?>/students/annuleerLes">Lessen Annuleren</a> | 
 <a href="<?=URLROOT;?>/instructeur/index">Instructeurs in dienst</a>
+<a href="<?=URLROOT;?>/bestelling/index">bestelling</a>
 <?php require APPROOT . '/views/includes/footer.php'; ?>
