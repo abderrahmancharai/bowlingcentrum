@@ -68,5 +68,72 @@ class bestelling extends Controller
     echo "bestelling is geupdate";
     $this->view('bestelling/update');
   }
+  
+  public function geenbestelling()
+  {
+    $bestelling = $this->bestellingModel->geenbestelling();
+
+    if ($bestelling == null) {
+      header("Refresh: 4; URL=" . URLROOT . "/bestelling/index");
+      echo "er zijn geen bestellingen meer";
+      echo "je word doorgestuurd naar de homepagina";
+    } else {
+      $rows = '';
+      foreach ($bestelling as $value) {
+        $rows .= "<tr>
+               
+                  <td>$value->firstname</td>
+                  <td>$value->infix</td>
+                  <td>$value->lastname</td>
+               
+                  <td>$value->Mobile</td>
+                  <td>$value->name</td>
+                  <td><a href='" . URLROOT . "/bestelling/allPackageOptions/$value->Reservationid'>bestelling toevoegen</a></td>;
+                </tr>";
+        $data = [
+          'title' => 'bestelling',
+          'rows' => $rows,
+        ];
+      }
+
+      $this->view('bestelling/geenbestelling', $data);
+    }
+  }
+
+  public function allPackageOptions($Reservationid)
+  {
+    $bestelling = $this->bestellingModel->allPackageOptions($Reservationid);
+    $geenbestelling = $this->bestellingModel->geenbestelling();
+    $rows = '';
+    foreach ($bestelling as $value) {
+      $packageoptionsId = $value->packageoptionsId;
+      $rows .= "<tr>
+                  <td>$value->name</td>
+                  <td>$value->price</td>
+                  <td>$value->omschrijving</td>
+                  <td><a href='" . URLROOT . "/bestelling/nieuwbestelling/" . $Reservationid . "/" . $packageoptionsId . "'>voeg toe</a></td>  
+                  ;
+                </tr>";
+      $data = [
+        'title' => 'bestelling',
+        'rows' => $rows,
+      ];
+    }
+    $this->view('bestelling/allPackageOptions', $data);
+  }
+
+  public function nieuwbestelling($Reservationid, $packageoptionsId)
+  {
+    $nieuwbestellings = $this->bestellingModel->nieuwbestelling($packageoptionsId, $Reservationid);
+    if ($nieuwbestellings == 0) {
+      header("Refresh: 4; URL=" . URLROOT . "/bestelling/index");
+      echo "er is iets fout gegaan";
+      echo "je word doorgestuurd naar de homepagina";
+    } else {
+      header("Refresh: 4; URL=" . URLROOT . "/bestelling/index");
+      echo "bestelling is toegevoegd";
+    }
+    $this->view('bestelling/nieuwbestelling');
+  }
 
 }
