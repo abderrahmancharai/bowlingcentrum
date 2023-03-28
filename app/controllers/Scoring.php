@@ -1,6 +1,6 @@
 <?php
 
-class Scoringgit extends Controller
+class Scoring extends Controller
 {
     //properties
     private $scoringModel;
@@ -13,7 +13,7 @@ class Scoringgit extends Controller
 
     public function index()
     {
-        $scoring = $this->scoringModel->getscoringgegevens();
+        $scoring = $this->scoringModel->getscoring();
         // var_dump($contact);exit();
 
         $rows = '';
@@ -57,6 +57,26 @@ class Scoringgit extends Controller
         'row' => $row
       ];
       $this->view("scoring/update", $data);
+    }
+  }
+
+  public function create() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      //var_dump($_POST);exit();
+      try {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $this->scoringModel->createscoring($_POST);exit();
+        header("Location:" . URLROOT . "/scoring/index");
+      } catch (PDOException $e) {
+        echo "Het inserten van het record is niet gelukt";
+        header("Refresh:3; url=" . URLROOT . "/scoring/index");
+      }
+    } else {
+      $data = [
+        'title' => "Voeg je score in"
+      ];
+
+      $this->view("scoring/create", $data);
     }
   }
 }

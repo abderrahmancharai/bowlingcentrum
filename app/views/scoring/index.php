@@ -2,6 +2,7 @@
   echo $data["title"];
 ?>
 <a href="<?=URLROOT;?>/scoring/create">Nieuw score</a>
+
 <table>
     <thead>
         <th>id</th>
@@ -14,7 +15,7 @@
         <th>delete</th>
     </thead>
     <tbody>
-        <?=$data['scoring']?>
+        <?=$data['rows']?>
     </tbody>
 </table>
 <a href="<?=URLROOT;?>/homepages/index">terug</a>
