@@ -119,6 +119,4 @@
       $result = $this->db->execute();
       return $result;
     }
-
-   
   }
