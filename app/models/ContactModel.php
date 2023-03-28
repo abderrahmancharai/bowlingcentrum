@@ -46,28 +46,36 @@
 
      public function updateContact($post) {
       try {
-        $this->db->dbHandler->beginTransaction();
+        // $this->db->dbHandler->beginTransaction();
 
         $this->db->query(" UPDATE person
                               SET firstname = :firstname,
                                   infix = :infix,
-                                  lastname = :lastname,
-                                  Email = :Email,
-                                  Mobile = :Mobile
-                            WHERE person.Id = Id;");
+                                  lastname = :lastname
+                            WHERE person.Id = :Id;");
 
-        $this->db->bind(':id', $post["id"], PDO::PARAM_INT);
+        $this->db->bind(':Id', $post["id"], PDO::PARAM_INT);
         $this->db->bind(':firstname', $post["firstname"], PDO::PARAM_STR);
         $this->db->bind(':infix', $post["infix"], PDO::PARAM_STR);
         $this->db->bind(':lastname', $post["lastname"], PDO::PARAM_STR);
-        $this->db->bind(':Email', $post["Email"], PDO::PARAM_INT);
-        $this->db->bind(':Mobile', $post["Mobile"], PDO::PARAM_INT);
            
 
-        return $this->db->execute();
+        $this->db->execute();
+
+        $this->db->query(" UPDATE contact
+                              SET Email = :Email,
+                                  Mobile = :Mobile
+                            WHERE contact.Id = :Id;");
+
+        $this->db->bind(':Id', $post["id"], PDO::PARAM_INT);
+        $this->db->bind(':Email', $post["Email"], PDO::PARAM_INT);
+        $this->db->bind(':Mobile', $post["Mobile"], PDO::PARAM_INT);
+
+         $this->db->execute();
+
       } catch(PDOException $e) {
         echo $e->getMessage() . "Rollback";
-        $this->db->dbHandler->rollBack();
+        // $this->db->dbHandler->rollBack();
       }
     }
     
