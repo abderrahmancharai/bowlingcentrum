@@ -42,4 +42,37 @@ $this->db->bind(':package_id', $post["package_id"], PDO::PARAM_INT);
 return $this->db->execute();
 
     }
+
+
+     public function getReservaties() {
+
+
+     $sql =    "SELECT   PERS.firstname 
+				,PERS.Id as personId
+                        ,RESE.Date
+                        ,RESE.StartTime
+                        ,RESE.EndTime
+                        ,RESE.AmountAdults
+                        ,RESE.AmountChildren
+                        ,PAPE.Id as PackagePerReservationId
+				,PAOP.Id as PackageOptionsId
+				,PAOP.name
+                        
+                        from person AS PERS
+                        
+                        inner join Reservation AS RESE
+				on RESE.PersonId = PERS.Id
+                        
+                        inner join PackagePerReservation AS PAPE
+				on PAPE.ReservationId = RESE.Id
+                        
+                        inner join PackageOptions AS PAOP
+				on PAOP.Id = PAPE.PackageOptionsId
+							
+                        where 		RESE.Id = 1";
+
+        $this->db->query($sql);
+        $result = $this->db->resultSet();
+        return $result;
+    }
 }

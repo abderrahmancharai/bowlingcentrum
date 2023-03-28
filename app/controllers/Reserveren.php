@@ -37,4 +37,37 @@ class Reserveren extends Controller
     }
   }
 
+  public function reservaties() {
+    /**
+     * Haal alle instructeurs op uit de model
+     */
+    $reserveren = $this->reserverenModel->getReservaties();
+
+    /**
+     * Maak tabelrijen van de opgehaalde data over de instructeurs
+     */
+    $rows = '';
+    foreach ($reserveren as $value) {
+      $rows .= "<tr>
+                  <td>$value->firstname</td>
+                  <td>$value->Date</td>
+                  <td>$value->StartTime</td>
+                  <td>$value->EndTime</td>
+                  <td>$value->AmountAdults</td>
+                  <td>$value->AmountChildren</td>
+                
+                </tr>";
+    }
+
+    /**
+     * Stuur de informatie door naar de view
+     */
+    $data = [
+      'rows' => $rows,
+      'title' => 'Reserveringen'
+    ];
+
+        $this->view('reserveren/reservaties', $data);
+    }
+
 }
