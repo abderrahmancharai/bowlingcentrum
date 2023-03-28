@@ -44,6 +44,54 @@
         return $result;
     }
 
+    public function createcontact($post) {
+      
+    $sysdate = date('Y-m-d H:i:s');
+    $this->db->query("INSERT INTO `contact` (`Email`
+                                            , `Mobile`
+                                            , `IsActive`
+                                            , `Opmerking`
+                                            , `DatumAangemaakt`
+                                            , `Datumgewijzigd`) 
+                    VALUES                (:Email
+                                            ,:Mobile
+                                            , '1'
+                                            , NULL
+                                            , '$sysdate'
+                                            , '$sysdate'");
+    
+    
+    $this->db->bind(':Email', $post['Email'], PDO::PARAM_INT);
+    $this->db->bind(':Mobile', $post['Mobile'], PDO::PARAM_STR);
+    
+    
+    $this->db->execute();
+    
+    $this->db->query("INSERT INTO `person` (`firstname`
+                                            , `infix`
+                                            , `lastname`
+                                            , `IsActive`
+                                            , `Opmerking`
+                                            , `DatumAangemaakt`
+                                            , `Datumgewijzigd`) 
+                    VALUES                  (:firstname
+                                            ,:infix
+                                            ,:lastname
+                                            , '1'
+                                            , NULL
+                                            , '$sysdate'
+                                            , '$sysdate');");
+    
+    $this->db->bind(':firstname', $post['firstname'], PDO::PARAM_INT);
+    $this->db->bind(':lastname', $post['lastname'], PDO::PARAM_INT);
+    $this->db->bind(':infix', $post['infix'], PDO::PARAM_INT);
+    
+    return $this->db->execute();
+    }
+    
+
+
+
      public function updateContact($post) {
       try {
         // $this->db->dbHandler->beginTransaction();

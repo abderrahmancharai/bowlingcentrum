@@ -78,27 +78,25 @@ class Contactgegevens extends Controller
     $this->view('contactgegevens/delete');
   }
 
-//    public function delete($id)
-//     {
-//         $contact = $this->contactModel->deletecontact($id);
-//         // var_dump($records);
-        
-//         $rows = "";
-//         foreach ($contact as $item) {
-//             $rows .= "<tr>
-//                         <td>$item->ID</td>
-//                         <td>" . explode(' ', $item->Datum)[0] . "</td>
-//                         <td>" . explode(' ', $item->Datum)[1] . "</td>
-//                         <td>$item->Naam</td>
-//                       </tr>";
-//         }
-
-//         $data = [
-//             'student' => $contact[0]->Naam,
-//             'title' => 'Verwijder contactgegevens',
-//             'rows' => $rows,
-//         ];
-
-//         $this->view('contactgegevens/delete', $data);
-//     }
+public function create() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      //var_dump($_POST);exit();
+      try {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $this->contactModel->createcontact($_POST);exit();
+        header("Location:" . URLROOT . "/contactgegevens/index");
+        //  var_dump($_POST);
+        //  exit();
+      } catch (PDOException $e) {
+        echo "Het inserten van het record is niet gelukt";
+        header("Refresh:3; url=" . URLROOT . "/contactgegevens/index");
+      }
+      
+    } else {
+      $data = [
+        'title' => "Contactgegevens toevoegen",
+      ];
+      $this->view("contactgegevens/create", $data);
+    }
+  }
 }
