@@ -38,4 +38,35 @@ class bestelling extends Controller
         ];
         $this->view('bestelling/index', $data);
     }
+    public function beschikbarebestelling($ReservationId, $packageperreservationId)
+  { // Haalt alle beschikbare bestellingen op vanuit de database via de getallbeschibarebestellingen methode van de bestellingModel class.
+    $beschibarebestelling = $this->bestellingModel->getallbeschibarebestellingen($ReservationId);
+
+    $rows = '';
+    foreach ($beschibarebestelling as $value) {
+      $packageoptionsId = $value->packageoptionsId;
+
+      $rows .= "<tr>
+                  <td>$value->name</td>
+                  <td>$value->price</td>
+                  <td>$value->Omschrijving</td>
+                  <td><a href='" . URLROOT . "/bestelling/update/" . $packageoptionsId . "/" . $packageperreservationId . "'>update</a></td>    ;
+                </tr>";
+    }
+    $data = [
+      'title' => 'bestelling',
+      'rows' => $rows,
+
+    ];
+    $this->view('bestelling/beschikbarebestelling', $data);
+  }
+
+  public function update($packageoptionsId, $packageperreservationId)
+  {
+    $bestelling = $this->bestellingModel->update($packageoptionsId, $packageperreservationId);
+    header("Refresh: 3; URL=" . URLROOT . "/bestelling/index");
+    echo "bestelling is geupdate";
+    $this->view('bestelling/update');
+  }
+
 }

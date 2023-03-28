@@ -47,4 +47,36 @@ class bestellingModel
         $result = $this->db->resultSet();
         return $result;
     }
+
+    public function getallbeschibarebestellingen($ReservationId)
+    {
+        $sql = " SELECT packageoptions.Id, packageoptions.name, 
+        packageoptions.price,
+        packageoptions.Omschrijving
+       ,packageperreservation.Id as packageperreservationId
+       ,packageoptions.Id as packageoptionsId
+       ,packageperreservation.Id as packageperreservationId
+         FROM packageoptions
+         LEFT JOIN packageperreservation ON packageoptions.Id = packageperreservation.PackageOptionsId 
+            AND packageperreservation.ReservationId = :ReservationId
+            WHERE packageperreservation.PackageOptionsId IS  NULL";
+        $this->db->query($sql);
+        $this->db->bind(':ReservationId', $ReservationId, PDO::PARAM_INT);
+        $result = $this->db->resultSet();
+        return $result;
+    }
+
+    
+    public function update($PackageOptionsId, $packageperreservationId)
+    {
+        $sql = "UPDATE packageperreservation 
+                SET PackageOptionsId = :PackageOptionsId, 
+                IsActive = b'0' 
+                WHERE packageperreservation.Id = :packageperreservationId";
+        $this->db->query($sql);
+        $this->db->bind(':PackageOptionsId', $PackageOptionsId, PDO::PARAM_INT);
+        $this->db->bind(':packageperreservationId', $packageperreservationId, PDO::PARAM_INT);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 }
