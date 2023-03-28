@@ -8,20 +8,20 @@ class Scoring extends Controller
     // Dit is de constructor van de controller
     public function __construct() 
     {
-        $this->scoringModel = $this->model('scoringModel');
+        $this->scoringModel = $this->model('ScoringModel');
     }
 
     public function index()
     {
         $scoring = $this->scoringModel->getscoring();
-        // var_dump($contact);exit();
+        //  var_dump($scoring);exit();
 
         $rows = '';
 
         foreach ($scoring as $value)
         {
             $rows .= "<tr>
-              <td>$value->id</td>
+                <td>$value->id</td>
                 <td>$value->firstname</td>
                 <td>$value->infix</td>
                  <td>$value->lastname</td>
@@ -43,22 +43,25 @@ class Scoring extends Controller
         $this->view('scoring/index', $data);
     }
 
-    public function update($id = null) {
-    // var_dump($id);exit();
-    // var_dump($_SERVER);exit();
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-      $this->scoringModel->updateScoring($_POST);
-      header("Location:" . URLROOT . "/scoring/index");
-    } else {
-      $row = $this->scoringModel->getSingleScoring($id);
-      $data = [
-        'title' => '<h1>Update scoring</h1>',
-        'row' => $row
-      ];
-      $this->view("scoring/update", $data);
-    }
-  }
+    public function update($id = null) 
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") 
+        {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $this->scoringModel->updatescoring($_POST);
+            header("Location:" . URLROOT . "/scoringgegevens/index");
+        } 
+        else 
+        {
+            $row = $this->scoringModel->getSinglescoring($id);
+
+            // var_dump($row);
+            // exit();
+            
+            $data = ['title' => '<h1>Update scoringgegevens</h1>', 'row' => $row];
+            $this->view("scoringgegevens/update", $data);
+        }
+    } 
 
   public function create() {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -79,4 +82,21 @@ class Scoring extends Controller
       $this->view("scoring/create", $data);
     }
   }
+
+
+public function delete($scoringId)
+  {
+    $scoringModel = $this->scoringModel->delete($scoringId);
+    if ($scoringdelete == 0) {
+      header("Refresh: 4; URL=" . URLROOT . "/scoring/index");
+      echo "er is iets fout gegaan<br>";
+      echo "    je word doorgestuurd naar de homepagina";
+    } else {
+      header("Refresh: 4; URL=" . URLROOT . "/scoring/index");
+      echo "scoring is verwijderd";
+    }
+    // De bestellingen en andere data doorgeven aan de view
+    $this->view('scoring/delete');
+  }
+  
 }

@@ -58,8 +58,13 @@
     }
 
     public function createCountry($post) {
-      $this->db->query("INSERT INTO country(id, name, capitalCity, continent, population) 
-                        VALUES(:id, :name, :capitalCity, :continent, :population)");
+      $this->db->query("INSERT INTO 
+      country(
+        id, 
+        name, capitalCity, continent, population) 
+                        VALUES(
+                          :id, 
+                          :name, :capitalCity, :continent, :population)");
 
       $this->db->bind(':id', NULL, PDO::PARAM_INT);
       $this->db->bind(':name', $post["name"], PDO::PARAM_STR);
