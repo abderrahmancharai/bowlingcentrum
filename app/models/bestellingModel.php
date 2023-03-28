@@ -66,7 +66,7 @@ class bestellingModel
         return $result;
     }
 
-    
+
     public function update($PackageOptionsId, $packageperreservationId)
     {
         $sql = "UPDATE packageperreservation 
@@ -80,9 +80,9 @@ class bestellingModel
         return $this->db->rowCount();
     }
 
-    
-    
-   
+
+
+
     public function newbestelling($PackageOptionsId, $packageperreservationId)
     {
 
@@ -105,7 +105,7 @@ class bestellingModel
         $result = $this->db->resultSet();
         return $result;
     }
-    
+
     public function geenbestelling()
     {
 
@@ -175,7 +175,4 @@ class bestellingModel
         $result = $this->db->resultSet();
         return $result;
     }
-
-    
 }
-
