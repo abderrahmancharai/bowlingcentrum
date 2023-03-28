@@ -9,20 +9,35 @@
     //   $this->helper = new SqlHelper();
     }
 
+    public function getSingleContact($id) 
+    {
+      $this->db->query("SELECT   PERS.Id AS PersonId
+			                    ,PERS.firstname
+			                    ,PERS.infix
+			                    ,PERS.lastname
+			                    ,CONT.Email
+			                    ,CONT.Mobile
+                        FROM 	 person AS PERS
+
+                        INNER JOIN  contact AS CONT
+		                        ON 	CONT.personId = PERS.Id
+                                WHERE		PERS.Id = :id");
+      $this->db->bind(':id', $id, PDO::PARAM_INT);
+      return $this->db->single();
+    }
+
     public function getContactgegevens() {
      
 
     $sql = "SELECT person.Id,
                 person.firstname, 
-				user.infix,
+				person.infix,
 			person.lastname,
 		    contact.Email,
 		    contact.Mobile
             from person
             inner join  contact
-            on contact.personId =person.Id
-            inner join  user
-            on user.personId =person.Id";
+            on contact.personId =person.Id";
         
         $this->db->query($sql);
         $result = $this->db->resultSet();
@@ -33,17 +48,21 @@
       try {
         $this->db->dbHandler->beginTransaction();
 
-        $this->db->query("SELECT person.Id,
-                person.firstname, 
-				user.infix,
-			person.lastname,
-		    contact.Email,
-		    contact.Mobile
-            from person
-            inner join  contact
-            on contact.personId =person.Id
-            inner join  user
-            on user.personId =person.Id");
+        $this->db->query(" UPDATE person
+                              SET firstname = :firstname,
+                                  infix = :infix,
+                                  lastname = :lastname,
+                                  Email = :Email,
+                                  Mobile = :Mobile
+                            WHERE person.Id = Id;");
+
+        $this->db->bind(':id', $post["id"], PDO::PARAM_INT);
+        $this->db->bind(':firstname', $post["firstname"], PDO::PARAM_STR);
+        $this->db->bind(':infix', $post["infix"], PDO::PARAM_STR);
+        $this->db->bind(':lastname', $post["lastname"], PDO::PARAM_STR);
+        $this->db->bind(':Email', $post["Email"], PDO::PARAM_INT);
+        $this->db->bind(':Mobile', $post["Mobile"], PDO::PARAM_INT);
+           
 
         return $this->db->execute();
       } catch(PDOException $e) {
@@ -51,13 +70,7 @@
         $this->db->dbHandler->rollBack();
       }
     }
-
-    // public function deletecontact($id) {
-    //   $this->db->query("DELETE FROM contact WHERE `contact`.`Id`");
-    //   $this->db->bind("Id", $id, PDO::PARAM_INT);
-    //   return $this->db->execute();
-    // }
-
+    
     public function delete($contactId)
     {
 

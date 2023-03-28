@@ -1,17 +1,20 @@
 <?php require APPROOT . '/views/includes/head.php'; ?>
 <?= $data['title']; ?>
 
+
+
 <form action="<?= URLROOT; ?>/contactgegevens/update" method="post">
   <table>
     <tbody>
+   
       <tr>
         <td>
-          <input type="text" name="Firstname" id="Firstname" value="<?= $data["row"]->Firstname; ?>">
+          <input type="text" name="firstname" id="firstname" value="<?= $data["row"]->firstname; ?>">
         </td>
       </tr>
       <tr>
         <td>
-          <input type="text" name="Infix" id="Infix" value="<?= $data["row"]->Infix; ?>">
+          <input type="text" name="infix" id="infix" value="<?= $data["row"]->infix; ?>">
         </td>
       </tr>
       <tr>
@@ -21,7 +24,7 @@
       </tr>
       <tr>
         <td>
-         <input type="number" name="Email" id="Email" value="<?= $data["row"]->Email; ?>">
+         <input type="email" name="Email" id="Email" value="<?= $data["row"]->Email; ?>">
         </td>
       </tr>
       <tr>
@@ -29,9 +32,9 @@
          <input type="number" name="Mobile" id="Mobile" value="<?= $data["row"]->Mobile; ?>">
         </td>
       </tr>
-      <tr>
+         <tr>
         <td>
-          <input type="hidden" name="id" value="<?= $data["row"]->id; ?>">
+          <input type="hidden" name="id" value="<?= $data["row"]->PersonId; ?>">
         </td>
       </tr>
       <tr>

@@ -43,22 +43,25 @@ class Contactgegevens extends Controller
         $this->view('contactgegevens/index', $data);
     }
 
-//     public function update($id = null) {
-//     // var_dump($id);exit();
-//     // var_dump($_SERVER);exit();
-//     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//       $this->contactModel->updateContact($_POST);
-//       header("Location:" . URLROOT . "/contactgegevens/index");
-//     } else {
-//       $row = $this->contactModel->getSingleContact($id);
-//       $data = [
-//         'title' => '<h1>Update contactgegevens</h1>',
-//         'row' => $row
-//       ];
-//       $this->view("contactgegevens/update", $data);
-//     }
-//   }
+    public function update($id = null) 
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") 
+        {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $this->contactModel->updateContact($_POST);
+            header("Location:" . URLROOT . "/contactgegevens/index");
+        } 
+        else 
+        {
+            $row = $this->contactModel->getSingleContact($id);
+
+            // var_dump($row);
+            // exit();
+            
+            $data = ['title' => '<h1>Update contactgegevens</h1>', 'row' => $row];
+            $this->view("contactgegevens/update", $data);
+        }
+    }
 
  public function delete($contactId)
   {
