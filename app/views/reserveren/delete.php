@@ -1,0 +1,1 @@
+<h1>Reservatie is geaunuleerd</h1>

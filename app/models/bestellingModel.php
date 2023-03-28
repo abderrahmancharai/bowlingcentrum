@@ -152,11 +152,11 @@ class bestellingModel
 
     public function nieuwbestelling($PackageOptionsId, $ReservationId)
     {
-
+        $sysdate = date('Y-m-d H:i:s');
 
         $sql = "INSERT INTO packageperreservation 
             (Id, PackageOptionsId, ReservationId, IsActive, Opmerking, DatumAangemaakt, Datumgewijzigd) 
-            VALUES (NULL, :PackageOptionsId, :ReservationId, '', NULL, '', '');
+            VALUES (NULL, :PackageOptionsId, :ReservationId, '', NULL, '$sysdate', '$sysdate');
     ";
         $this->db->query($sql);
         $this->db->bind(':PackageOptionsId', $PackageOptionsId, PDO::PARAM_INT);
