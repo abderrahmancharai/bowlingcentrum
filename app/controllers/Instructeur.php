@@ -163,4 +163,3 @@ class Instructeur extends Controller
       $this->view('/instructeur/updategebruiktevoertuig',);
   }
 }
-
