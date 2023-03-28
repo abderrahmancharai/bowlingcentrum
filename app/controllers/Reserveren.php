@@ -48,6 +48,7 @@ class Reserveren extends Controller
      */
     $rows = '';
     foreach ($reserveren as $value) {
+  
       $rows .= "<tr>
                   <td>$value->firstname</td>
                   <td>$value->Date</td>
@@ -55,6 +56,7 @@ class Reserveren extends Controller
                   <td>$value->EndTime</td>
                   <td>$value->AmountAdults</td>
                   <td>$value->AmountChildren</td>
+                  <td><a href='" . URLROOT . "/reserveren/delete/$value->Reservationid'>besteling toevoegen</a></td>;
                 
                 </tr>";
     }
@@ -68,6 +70,18 @@ class Reserveren extends Controller
     ];
 
         $this->view('reserveren/reservaties', $data);
+    }
+    
+    public function delete($Reservationid) {
+    /**
+     * Haal alle instructeurs op uit de model
+     */
+
+     $delete = $this->reserverenModel->delete($Reservationid);
+    
+        $this->view('reserveren/delete');
+
+
     }
 
 }
