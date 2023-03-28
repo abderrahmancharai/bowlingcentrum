@@ -3,5 +3,5 @@
 
 <a href="<?=URLROOT;?>/bestelling/index">bestelling</a>
 <a href="<?=URLROOT;?>/reserveren/reservaties">reservaties</a>
-<a href="<?=URLROOT;?>/contactgegevens/index">reservaties</a>
+<a href="<?=URLROOT;?>/contactgegevens/index">contactgegevens</a>
 <?php require APPROOT . '/views/includes/footer.php'; ?>
