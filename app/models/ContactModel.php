@@ -10,21 +10,23 @@
     }
 
     public function getContactgegevens() {
-      $this->db->query("SELECT * FROM person.firstname, 
+     
+
+    $sql = "SELECT person.Id,
+                person.firstname, 
 				user.infix,
 			person.lastname,
-   
-		contact.Email,
-		contact.Mobile
+		    contact.Email,
+		    contact.Mobile
+            from person
+            inner join  contact
+            on contact.personId =person.Id
+            inner join  user
+            on user.personId =person.Id";
         
-         from person
-        inner join  contact
-        on contact.personId =person.Id
-        
-        inner join  user
-        on user.personId =person.Id");
-      $result = $this->db->resultSet();
-      return $result;
+        $this->db->query($sql);
+        $result = $this->db->resultSet();
+        return $result;
     }
 
 }
