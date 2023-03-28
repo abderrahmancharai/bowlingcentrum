@@ -60,6 +60,20 @@ class bestelling extends Controller
     ];
     $this->view('bestelling/beschikbarebestelling', $data);
   }
+  public function delete($packageperreservationId)
+  {
+    $bestellingdelete = $this->bestellingModel->delete($packageperreservationId);
+    if ($bestellingdelete == 0) {
+      header("Refresh: 4; URL=" . URLROOT . "/bestelling/index");
+      echo "er is iets fout gegaan<br>";
+      echo "    je word doorgestuurd naar de homepagina";
+    } else {
+      header("Refresh: 4; URL=" . URLROOT . "/bestelling/index");
+      echo "bestelling is verwijderd";
+    }
+    // De bestellingen en andere data doorgeven aan de view
+    $this->view('bestelling/delete');
+  }
 
   public function update($packageoptionsId, $packageperreservationId)
   {

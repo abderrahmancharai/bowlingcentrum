@@ -79,6 +79,8 @@ class bestellingModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    
     
    
     public function newbestelling($PackageOptionsId, $packageperreservationId)
@@ -162,5 +164,18 @@ class bestellingModel
         $result = $this->db->resultSet();
         return $result;
     }
+
+    public function delete($packageperreservationId)
+    {
+
+        $sql = "DELETE FROM packageperreservation 
+                        WHERE packageperreservation.Id = :packageperreservationId;";
+        $this->db->query($sql);
+        $this->db->bind(':packageperreservationId', $packageperreservationId, PDO::PARAM_INT);
+        $result = $this->db->resultSet();
+        return $result;
+    }
+
+    
 }
 
