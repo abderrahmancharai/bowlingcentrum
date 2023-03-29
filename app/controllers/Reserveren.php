@@ -56,7 +56,7 @@ class Reserveren extends Controller
                   <td>$value->EndTime</td>
                   <td>$value->AmountAdults</td>
                   <td>$value->AmountChildren</td>
-                  <td><a href='" . URLROOT . "/reserveren/delete/$value->Reservationid'>besteling toevoegen</a></td>;
+                  <td><a href='" . URLROOT . "/reserveren/delete/$value->Reservationid'>besteling annuleren</a></td>;
                 
                 </tr>";
     }
